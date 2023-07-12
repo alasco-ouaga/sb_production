@@ -36,3 +36,45 @@
 .menu-btn {
   color: white;
 }
+
+.text_gras{
+  font-weight: bold;
+}
+
+.size_x_large{
+  font-size: larger;
+}
+
+.text_red{
+  color: red;
+  font-weight: bold;
+}
+
+.bgr_first{
+  background-color: rgba(0, 0, 0, 0.726);
+  background-color: black
+}
+
+.bgr_second{
+  background-color: white;
+}
+
+.text_gras {
+  font-weight: bold;
+}
+
+.text_italic{
+  font-style: italic;
+}
+
+.hide{
+  display: none;
+}
+
+.text_blue{
+  color : blue;
+}
+
+.text_aligne_right{
+    text-align: right;
+}

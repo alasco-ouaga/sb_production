@@ -5,7 +5,7 @@
 
         <!-- Sidebar Toggle-->
         <button class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0" id="sidebarToggle" href="#!">
-            <i class="fas fa-bars menu-btn" ></i>
+            <i class="fas fa-bars menu-btn"></i>
         </button>
 
         <!-- Navbar Search-->
@@ -29,7 +29,6 @@
                                 @csrf
                             </form>
                         @endauth
-
                     </li>
                 </ul>
             </li>
@@ -53,13 +52,13 @@
                                 data-bs-parent="#sidenavAccordion">
                                 <nav class="sb-sidenav-menu-nested nav menu">
                                     @can('voir_entreprise_information')
-                                        <a class="nav-link gras menu-text"  href=""> Information</a>
+                                        <a class="nav-link gras menu-text"  href="{{ route('get_structure_data') }}"> Information</a>
                                     @endcan
                                     @can('voir_entreprise_telephone')
-                                        <a class="nav-link menu-text gras" href=""> Telephone</a>
+                                        <a class="nav-link menu-text gras" href="{{ route('get_structure_phone') }}"> Telephone</a> 
                                     @endcan
                                     @can('voir_entreprise_roles')
-                                        <a class="nav-link gras menu-text" href="">Role</a>
+                                        <a class="nav-link gras menu-text" href="{{ route('get_role') }}">Role</a>
                                     @endcan
                                 </nav>
                             </div>
@@ -76,7 +75,7 @@
                                 data-bs-parent="#sidenavAccordion">
                                 <nav class="sb-sidenav-menu-nested nav menu">
                                     @can('creer_des_agents')
-                                        <a class="nav-link menu-text gras" href="">Creer</a>
+                                        <a class="nav-link menu-text gras" href="{{ route('user_create_form') }}">Creer</a> 
                                     @endcan
                                     @can('voir_des_agents')
                                         <a class="nav-link menu-text gras" href="">Voir</a>
@@ -132,7 +131,7 @@
                         @can('accès_aux_paiements')
                             <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapsePayment"
                                 aria-expanded="false" aria-controls="collapsePayment">
-                                <span class="text-uppercase text-white gras"> Payment </span>
+                                <span class="text-uppercase text-white"> Paiement </span>
                                 <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down menu-btn"></i></div>
                             </a>
                             <div class="collapse" id="collapsePayment" aria-labelledby="headingOne"
@@ -159,7 +158,7 @@
                     @yield('content')
                 </div>
             </main>
-            <footer class="py-4 bg-light mt-auto">
+            <footer class="py-4 mt-auto">
                 <div class="container-fluid px-4"></div>
             </footer>
         </div>

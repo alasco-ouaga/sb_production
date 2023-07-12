@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string('last_name');
             $table->string('matricule');
             $table->string('phone');
-            $table->string('locality');
+            $table->string('locality')->nullable();
             $table->string('email')->nullable();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');

@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Structure extends Model
 {
@@ -31,5 +32,10 @@ class Structure extends Model
     public function custumers(): HasMany 
     {
         return $this->hasMany(Custumer::class, "custumer_id");
+    }
+
+    public function city(): BelongsTo 
+    {
+        return $this->belongsTo(City::class, "city_id");
     }
 }

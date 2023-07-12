@@ -7,6 +7,4 @@
 <script src="{{ asset('js/download/simple-datatables@latest.js') }}"></script>
 <script src="{{ asset('template/js/datatables-simple-demo.js') }}"></script>
 <script src="{{ asset('js/myjs/admin.js') }}"></script>
-<script src="{{ asset('js/myjs/otherjs.js') }}"></script>
-<script src="{{ asset('js/myjs/frontendjs.js') }}"></script>
 <script src="{{ asset('js/download/fontawesome.all.js') }}"></script>

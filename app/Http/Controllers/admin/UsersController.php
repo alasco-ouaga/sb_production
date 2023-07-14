@@ -25,7 +25,7 @@ class UsersController extends Controller
         //Avoir tous les roles
         $roles = Role::all();
 
-        return view("admin.user.show",compact("roles","role_name"));
+        return view("admin.user.create.create",compact("roles","role_name"));
     }
 
     public function save_user_create(Request $request){
@@ -98,10 +98,77 @@ class UsersController extends Controller
                 RoleUser::insert($role);
                 $index++;
             }
-            return back()->with("create_success","L'ajout de l'agent a reussi avec succès");
+            return back()->with("create_success","L'agent a été ajouter avec succès");
         }
         else{
-            return back()->with("create_denied","L'ajout de l'agent a echoué (server error) : Actualiser la page svp");
+            return back()->with("create_denied","L'ajout de l'agent a echoué (server error possible) : Actualiser la page svp");
         }
+    }
+
+    public function get_role() {
+        $roles = Role::all();
+        return view("admin.user.show.index",compact("roles"));
+    }
+
+    public function show_user($role_id){
+        $role_users = RoleUser::where("role_id",$role_id)->where("index",true)->get();
+        $users = [];
+        foreach($role_users as $role_user){
+            $users[] = User::find($role_user->user_id);
+        }
+        $role_name = Role::find($role_id)->name;
+        $compter = count($users);
+        return view("admin.user.show.show",compact("users","compter","role_name"));
+    }
+
+    public function delete_user() {
+        
+    }
+
+    public function authaurize_user() {
+        
+    }
+
+    public function get_user_data($user_id){
+        $user = User::find($user_id);
+        $role_user = RoleUser::where("user_id",$user_id)->where("index",true)->first();
+        $role_name = Role::find($role_user->role_id)->name;
+        return ["user"=>$user , "role"=>$role_name];
+    }
+
+    public function get_user_info($user_id){
+
+        //Avoir le role de celui qui s'est connecté
+        $log_user_id = auth()->user()->id;
+        $response = new FonctionController();
+        $role_id =  $response->userRoleId($log_user_id);
+
+        //Avoir la liste des roles qui seront utilisés pour creer le user
+        $response = new FonctionController();
+        $roles =  $response->getPermiteRoles($role_id);
+        $compter = count($roles);
+
+        //recuperation du user
+        $user = User::find($user_id);
+        $role_id = RoleUser::where("user_id",$user_id)->where("index",true)->first()->role_id;
+        return ["user"=>$user, "roles"=>$roles , "compter"=>$compter , "role_id"=>$role_id];
+    }
+
+    public function user_update_save(Request $request){
+        $new = new FonctionController();
+        $response = $new->updateUserSave($request->user_id,$request->first_name,$request->last_name,$request->phone,$request->email,$request->locality,$request->role_id);
+        return $response;
+    }
+
+    public function get_role_to_create_user(){
+        $roles = Role::all();
+        $compter = count($roles);
+        return ["roles"=>$roles , "compter"=>$compter];
+    }
+
+    public function user_create_save(Request $request){
+        $new = new FonctionController();
+        $response = $new->userCreateSave($request->first_name,$request->last_name,$request->phone,$request->email,$request->locality,$request->role_id);
+        return $response;
     }
 }

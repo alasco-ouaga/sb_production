@@ -78,7 +78,7 @@
                                         <a class="nav-link menu-text gras" href="{{ route('user_create_form') }}">Creer</a> 
                                     @endcan
                                     @can('voir_des_agents')
-                                        <a class="nav-link menu-text gras" href="">Voir</a>
+                                        <a class="nav-link menu-text gras" href="{{ route('get_role') }}">Voir</a> 
                                     @endcan
                                 </nav>
                             </div>

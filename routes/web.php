@@ -52,6 +52,16 @@ Route::middleware('auth')->group(function(){
         //User
         Route::get('/gestionRouteProtected/user/create/form', [UsersController::class, 'user_create_form'])->name('user_create_form');
         Route::post('/gestionRouteProtected/user/create', [UsersController::class, 'save_user_create'])->name('save_user_create');
+        Route::get('/gestionRouteProtected/user/show/begin', [UsersController::class, 'get_role'])->name('get_role');
+        Route::get('/gestionRouteProtected/user/show/end/{role_id}', [UsersController::class, 'show_user'])->name('show_user');
+        Route::get('/gestionRouteProtected/user/delete/{user_id}', [UsersController::class, 'delete_user'])->name('delete_user');
+        Route::get('/gestionRouteProtected/user/authaurize/{user_id}', [UsersController::class, 'authaurize_user'])->name('authaurize_user');
+        Route::get('/gestionRouteProtected/api/user/data/{user_id}', [UsersController::class, 'get_user_data']);
+        Route::get('/gestionRouteProtected/api/user/info/{user_id}', [UsersController::class, 'get_user_info']);
+        Route::post('/gestionRouteProtected/api/user/update/save', [UsersController::class, 'user_update_save']);
+        Route::get('/gestionRouteProtected/api/get/role', [UsersController::class, 'get_role_to_create_user']);
+        Route::post('/gestionRouteProtected/api/user/create/save', [UsersController::class, 'user_create_save']);
+
         
     });
 

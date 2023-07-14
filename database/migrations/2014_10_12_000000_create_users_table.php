@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('phone');
             $table->string('locality')->nullable();
             $table->string('email')->nullable();
+            $table->boolean('access');
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->rememberToken();

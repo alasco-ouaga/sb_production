@@ -47,11 +47,20 @@
 
 .text_red{
   color: red;
-  font-weight: bold;
+}
+
+.text_blue{
+  color : blue;
+}
+
+.text_green{
+  color: rgb(66, 82, 42);
 }
 
 .bgr_first{
-  background-color: black
+  background-color: rgb(69, 137, 141);
+  background-color: rgb(60, 98, 100);
+  background-color: black;
 }
 
 .bgr_second{
@@ -70,10 +79,6 @@
   display: none;
 }
 
-.text_blue{
-  color : blue;
-}
-
-.text_aligne_right{
-    text-align: right;
+.text_small_size{
+  font-size: smaller;
 }

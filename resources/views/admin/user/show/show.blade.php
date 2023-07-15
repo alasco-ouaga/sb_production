@@ -1,7 +1,7 @@
 @extends('layouts.admin.app')
 @section('content')
 @if($compter != 0)
-<div class="container size col-xl-11 col-lg-11 black card">
+<div class="container card">
    <!--  Tables des administrateurs -->
    <div class="row gesiton_titre mb-2 text-uppercase text_italic py-2"> Liste des agents ({{$compter}}) : {{$role_name}} </div>
 
@@ -299,38 +299,38 @@
             <div class="row mt-3">
                 <input  type="hidden" id="user_id"  value=""> </input>
                 <div class="col-xl-6 col-lg-6">
-                    <label for="" class="gras"> NOM </label>
+                    <label for="" class="text_gras"> NOM </label>
                     <input  type="text" class="form-control  first_name" id="first_name"  require value="" >  </input>
                     <span class="text_red hide first_name_null"> Le nom est demandé </span>
                 </div>
                 <div class="col-xl-6 col-lg-6">
-                    <label for="" class="gras"> PRENOM </label>
+                    <label for="" class="text_gras"> PRENOM </label>
                     <input type="text" class="form-control  last_name" id="last_name" require value="">  </input>
                     <span class="text_red hide last_name_null"> Le prenom est demandé </span>
                 </div>
             </div>
             <div class="row mt-2" >
                 <div class="">
-                    <label for="" class="gras"> PHONE  </label>
+                    <label for="" class="text_gras"> PHONE  </label>
                     <input type="text" class="form-control  phone"  id="phone" require value=""> </input>
                     <span class="text_red hide phone_null"> Le telepnone est demandé </span>
                 </div>
             </div>
             <div class="row mt-2" >
                 <div class="">
-                    <label for="" class="gras">  EMAIL </label>
+                    <label for="" class="text_gras">  EMAIL </label>
                     <input type="text"  class="form-control  email" id="email" require value="">  </input>
                 </div>
             </div>
             <div class="row mt-2" >
                 <div class="">
-                    <label for="" class="gras">  Locality </label>
+                    <label for="" class="text_gras">  LOCALITE </label>
                     <input type="text"  class="form-control  email" id="locality" require value="">  </input>
                 </div>
             </div>
             <div class="row mt-2 mb-3" >
                 <div class="modal-body-select" >
-                    <label for="" class="gras">  Role </label>
+                    <label for="" class="text_gras">  ROLE </label>
                     <select name="" class="form-control" id="role_id">
                         <!-- contenu -->
                     </select>

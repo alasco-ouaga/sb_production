@@ -95,11 +95,11 @@
                             <div class="collapse" id="collapseClient" aria-labelledby="headingOne"
                                 data-bs-parent="#sidenavAccordion">
                                 <nav class="sb-sidenav-menu-nested nav menu">
-                                    @can('voir_des_clients')
-                                        <a class="nav-link menu-text gras" href="">Voir</a>
-                                    @endcan
                                     @can('creer_des_clients')
-                                        <a class="nav-link menu-text gras" href="">Créer</a>
+                                        <a class="nav-link menu-text gras" href="{{ route('get_custumer_create_form') }}">créer</a>
+                                    @endcan
+                                    @can('voir_des_clients')
+                                        <a class="nav-link menu-text gras" href="{{ route('custumer_show') }}">Voir</a>
                                     @endcan
                                 </nav>
                             </div>

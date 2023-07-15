@@ -403,5 +403,217 @@ $(document).ready(function () {
           }) 
       }
   })
+
+
+  //----------------------------------Partie client ------------------------------------------//
+  //----------------------------------Partie client ------------------------------------------//
+
+  //Obtenir les informations du client
+  $('.get_custumer_info').click(function () {
+    var custumer_id = $(this).parent().find('.custumer_id').attr('id');
+    console.log(custumer_id)
+
+    request = $.ajax({
+      url: "/secretaireRouteProtected/api/custumer/show/"+ custumer_id,
+      type: "get",
+      data: {}
+    });
+
+    request.done(function (response, textStatus, jqXHR) {
+        console.log(response);
+        document.getElementById('get_first_name').textContent=response["first_name"];
+        document.getElementById('get_last_name').textContent=response["last_name"];
+        document.getElementById('get_phone').textContent=response["phone"];
+        document.getElementById('get_locality').textContent=response["locality"];
+        document.getElementById('get_created_at').textContent=response["created_at"];
+    })
+
+    request.fail(function (jqXHR, textStatus, errorThrown) {
+      console.error(
+        "Erreur: " +
+        textStatus, errorThrown
+      );
+    })
+  })
+
+  //Debut de creation d'un agent
+  $('.get_form_create_custumer').click(function () {
+
+    //Supprimer les erreurs notées sur les le contenu des inputs
+    document.getElementById("create_first_name").className = "form-control";
+    document.getElementById("create_last_name").className = "form-control";
+    document.getElementById("create_phone").className = "form-control";
+    document.getElementById("create_locality").className = "form-control";
+
+    //Cacher les erreur s'ils en trouve
+    $(".create_first_name_null").hide()
+    $(".create_last_name_null").hide()
+    $(".create_phone_null").hide()
+    $(".create_locality_null").hide();
+    $(".custumer_create_success").hide();
+    $(".custumer_create_denied").hide();
+  })
+
+  //Enregistrer un client
+  $('.custumer_create_save').click(function () {
+      const first_name = document.getElementById('create_first_name').value;
+      const last_name = document.getElementById('create_last_name').value;
+      const phone = document.getElementById('create_phone').value;
+      const locality = document.getElementById('create_locality').value;
+      console.log("essai"+first_name)
+
+      if(first_name.length === 0  || last_name.length === 0 || phone.length === 0){
+        if(first_name.length === 0 ){
+          document.getElementById("create_first_name").className = "form-control is-invalid";
+          $(".create_first_name_null").show()
+        }
+        if(last_name.length === 0 ){
+          document.getElementById("create_last_name").className = "form-control is-invalid";
+          $(".create_last_name_null").show()
+        }
+        if(phone.length < 8 ){
+          document.getElementById("create_phone").className = "form-control is-invalid";
+          $(".create_phone_null").show()
+        }
+      }
+      //On peut continuer si les données envoyées sont bonnes 
+      else{
+          console.log("vers ajax"+first_name,last_name,phone)
+          let _token   = $('meta[name="csrf-token"]').attr('content');
+          request = $.ajax({
+            url: "/secretaireRouteProtected/api/custumer/create",
+            type: "post",
+            data: {
+                first_name ,last_name,phone,locality,_token ,
+            }
+          });
+
+          //En cas de reusiite de modification 
+          request.done(function (response, textStatus, jqXHR) {
+            console.log("le retour est : "+response);
+            if(response != false){
+              $(".custumer_create_success").show();
+              $(".custumer_create_denied").hide();
+              document.getElementById("create_first_name").value="";
+              document.getElementById("create_last_name").value="";
+              document.getElementById("create_phone").value="";
+              document.getElementById("create_locality").value="";
+            }
+            else{
+              $(".custumer_create_success").hide();
+              $(".custumer_create_denied").show();
+            }
+          })
+    
+          //En cas de d'echec de modification 
+          request.fail(function (jqXHR, textStatus, errorThrown) {
+            console.error(
+              "Erreur: " +
+              textStatus, errorThrown
+            );
+          }) 
+      }
+  })
+
+  //debut de modifiation d'un agent
+  $('.get_custumer_data_to_update').click(function () {
+    const custumer_id = $(this).parent().find('.custumer_id').attr('id');
+    console.log("id du user est :",custumer_id)
+
+    //Supprimer les erreur notées sru les input
+    document.getElementById("update_first_name".className = "form-control");
+    document.getElementById("update_last_name").className = "form-control";
+    document.getElementById("update_phone").className = "form-control";
+    document.getElementById("update_locality").className = "form-control";
+
+    $(".update_first_name_null").hide()
+    $(".update_last_name_null").hide()
+    $(".update_phone_null").hide()
+
+    request = $.ajax({
+      url: "/secretaireRouteProtected/api/custumer/show/"+ custumer_id,
+      type: "get",
+      data: {}
+    });
+  
+    request.done(function (response, textStatus, jqXHR) {
+      console.log("le retour est :"+response.role_id +textStatus);
+      document.getElementById('update_first_name').value=response["first_name"];
+      document.getElementById('update_last_name').value=response["last_name"];
+      document.getElementById('update_phone').value=response["phone"];
+      document.getElementById('update_custumer_id').value=response["id"];
+      document.getElementById('update_locality').value=response["locality"];
+    })
+
+    request.fail(function (jqXHR, textStatus, errorThrown) {
+      console.error(
+        "Erreur: " +
+        textStatus, errorThrown
+      );
+    })
+  })
+
+  //Enregistrer un emodifiction de client 
+  $('.custumer_update_save').click(function () {
+    var first_name = document.getElementById('update_first_name').value;
+    var last_name = document.getElementById('update_last_name').value;
+    var custumer_id = document.getElementById('update_custumer_id').value;
+    var locality = document.getElementById('update_locality').value;
+    var phone = document.getElementById('update_phone').value;
+
+    if(first_name.length === 0  || last_name.length === 0 || phone.length === 0){
+      if(first_name.length === 0 ){
+        document.getElementById("update_first_name").className = "form-control update_first_name is-invalid";
+        $(".update_first_name_null").show()
+      }
+      if(last_name.length === 0 ){
+        document.getElementById("update_last_name").className = "form-control update_last_name is-invalid";
+        $(".update_last_name_null").show()
+      }
+
+      if(phone.length < 8 ){
+        document.getElementById("update_phone").className = "form-control update_phone is-invalid";
+        $(".update_phone_null").show()
+      }
+    }
+    //On peut continuer si les données envoyées sont bonnes 
+    else{
+        console.log(first_name,last_name,phone,custumer_id)
+        let _token   = $('meta[name="csrf-token"]').attr('content');
+        request = $.ajax({
+          url: "/secretaireRouteProtected/api/custumer/update",
+          type: "post",
+          data: {
+                first_name ,last_name,phone,custumer_id,locality,_token ,
+          }
+        });
+
+        //En cas de reusiite de modification 
+        request.done(function (response, textStatus, jqXHR) {
+          console.log("Resultat : " +response + " " +"Etat :" + textStatus );
+          if(response == true){
+            $(".custumer_update_success").show();
+            $(".custumer_update_denied").hide();
+            $(".update_first_name_null").hide()
+            $(".update_last_name_null").hide()
+            $(".update_phone_null").hide()
+          }
+          else{
+            $(".custumer_update_success").hide();
+            $(".custumer_update_denied").show();
+          }
+        })
+
+        //En cas de d'echec de modification 
+        request.fail(function (jqXHR, textStatus, errorThrown) {
+          console.error(
+            "Erreur: " +
+            textStatus, errorThrown
+          );
+        }) 
+
+    }
+  })
+
   
 });

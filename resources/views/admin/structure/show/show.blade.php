@@ -1,7 +1,7 @@
 @extends('layouts.admin.app')
 @section('content')
 
-<div class="container bgr_first card black">
+<div class="container bgr_first card">
     <div class="row gesiton_titre .title-bar-color mb-2">Information de l'entreprise</div>
     <div class="container bgr_second border mt-1 mb-3">
         <div class="row mt-3">

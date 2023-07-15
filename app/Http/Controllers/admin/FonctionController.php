@@ -196,8 +196,8 @@ class FonctionController extends Controller
         }
     }
 
-    /* .............les fonctions pour la partie concernants  les clients.................. */
-    /* .............les fonctions pour la partie concernants  les clients.................. */
+    /* -------------------les fonctions pour la partie concernants  les clients----------------- */
+    /* -------------------les fonctions pour la partie concernants  les clients----------------- */
 
     //fonction pour enregistrer un client
     public function custumerCreateSave($first_name,$last_name,$phone,$locality)
@@ -205,8 +205,8 @@ class FonctionController extends Controller
         $structure_id = Structure::first()->id;
 
         //generer un matricule
-        $min= 5000 ;
-        $max= 9000 + count(Custumer::all()) ;
+        $min = 5000 ;
+        $max = 9000 + count(Custumer::all()) ;
 
         do {
             $matricule = $this->create_matricule($min , $max);
@@ -226,6 +226,8 @@ class FonctionController extends Controller
                 'locality'              => $locality,
                 'access'                => true,
                 'delete'                => false,
+                'created_at'            => now(),
+                'updated_at'            => now(),
             ];
             if(Custumer::insert($custumer)){
                 $response = true;
@@ -237,17 +239,24 @@ class FonctionController extends Controller
     //fonction pour modifier un client
     public function custumerUpdateSave($custumer_id,$first_name,$last_name,$phone,$locality)
     {
-        $response = Custumer::where("id",$custumer_id)->update([
-            'first_name'            => $first_name,
-            'last_name'             => $last_name,
-            'phone'                 => $phone,
-            'locality'              => $locality,
-        ]);
-        if($response){
-            return true;
+        if(Custumer::where("phone",$phone)->where("id","!=",$custumer_id)->exists()){
+            $response = false;
         }
         else{
-            return false;
+            $update = Custumer::where("id",$custumer_id)->update([
+                'first_name'            => $first_name,
+                'last_name'             => $last_name,
+                'phone'                 => $phone,
+                'locality'              => $locality,
+            ]);
+            if($update){
+                $response = true ;
+            }
+            else{
+                $response = false ;
+            }
         }
+        return $response;
+       
     }
 }

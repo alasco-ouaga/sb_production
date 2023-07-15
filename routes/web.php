@@ -9,7 +9,8 @@ use GuzzleHttp\Middleware;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\admin\StructureController;
 use App\Http\Controllers\admin\UsersController;
-
+use App\Http\Controllers\admin\CustumerController;
+use App\Models\Custumer;
 
 /*
 |--------------------------------------------------------------------------
@@ -56,14 +57,16 @@ Route::middleware('auth')->group(function(){
         Route::get('/gestionRouteProtected/user/show/end/{role_id}', [UsersController::class, 'show_user'])->name('show_user');
         Route::get('/gestionRouteProtected/user/delete/{user_id}', [UsersController::class, 'delete_user'])->name('delete_user');
         Route::get('/gestionRouteProtected/user/authaurize/{user_id}', [UsersController::class, 'authaurize_user'])->name('authaurize_user');
+        Route::get('/gestionRouteProtected/user/blocked/{user_id}', [UsersController::class, 'user_blocked'])->name('user_blocked');
+        Route::get('/gestionRouteProtected/user/authaurize/{user_id}', [UsersController::class, 'user_authaurize'])->name('user_authaurize');
+        Route::get('/gestionRouteProtected/user/delete/{user_id}', [UsersController::class, 'user_delete'])->name('user_delete');
+
+        //api_route
         Route::get('/gestionRouteProtected/api/user/data/{user_id}', [UsersController::class, 'get_user_data']);
         Route::get('/gestionRouteProtected/api/user/info/{user_id}', [UsersController::class, 'get_user_info']);
         Route::post('/gestionRouteProtected/api/user/update/save', [UsersController::class, 'user_update_save']);
         Route::get('/gestionRouteProtected/api/get/role', [UsersController::class, 'get_role_to_create_user']);
         Route::post('/gestionRouteProtected/api/user/create/save', [UsersController::class, 'user_create_save']);
-        Route::get('/gestionRouteProtected/user/blocked/{user_id}', [UsersController::class, 'user_blocked'])->name('user_blocked');
-        Route::get('/gestionRouteProtected/user/authaurize/{user_id}', [UsersController::class, 'user_authaurize'])->name('user_authaurize');
-        Route::get('/gestionRouteProtected/user/delete/{user_id}', [UsersController::class, 'user_delete'])->name('user_delete');
 
         
     });
@@ -71,5 +74,17 @@ Route::middleware('auth')->group(function(){
     //route accessible par le secretaire
     Route::middleware('secretaireRouteProtected')->group(function () {
 
+        //simple_route
+        Route::get('/secretaireRouteProtected/custumer/form', [CustumerController::class, 'get_custumer_create_form'])->name('get_custumer_create_form');
+        Route::post('/secretaireRouteProtected/custumer/create', [CustumerController::class, 'custumer_create_save'])->name('custumer_create_save');
+        Route::get('/secretaireRouteProtected/custumer/show', [CustumerController::class, 'custumer_show'])->name('custumer_show');
+        Route::get('/secretaireRouteProtected/custumer/delete/{custumer_id}', [CustumerController::class, 'custumer_delete'])->name('custumer_delete');
+        Route::get('/secretaireRouteProtected/custumer/blocked/{custumer_id}', [CustumerController::class, 'custumer_blocked'])->name('custumer_blocked');
+        Route::get('/secretaireRouteProtected/custumer/authaurize/{custumer_id}', [CustumerController::class, 'custumer_authaurize'])->name('custumer_authaurize');
+
+        //api_route
+        Route::post('/secretaireRouteProtected/api/custumer/create', [CustumerController::class, 'ajax_custumer_create_save']);
+        Route::get('/secretaireRouteProtected/api/custumer/show/{custumer_id}', [CustumerController::class, 'ajax_custumer_show']);
+        Route::post('/secretaireRouteProtected/api/custumer/update', [CustumerController::class, 'ajax_custumer_update_save']);
     });
 });

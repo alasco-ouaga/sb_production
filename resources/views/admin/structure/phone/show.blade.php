@@ -20,9 +20,9 @@
 
         <div class="container  gras">
             @if(Session()->has('delete_success'))
-            <div class="row italic">
-                <span class="text_red text_blue mb-2 text_italic"> {{ Session()->get('delete_success') }} </span> 
-            </div>
+                <div class="row italic">
+                    <span class="text_red text_blue text_gras mb-2 text_italic"> {{ Session()->get('delete_success') }} </span> 
+                </div>
             @endif
             @if(Session()->has('delete_refused'))
                 <div class="row italic">
@@ -50,18 +50,19 @@
                                 <td>
                                     {{ $i }}
                                 </td>
-                                <td>
+                                <td class="text_gras">
                                     {{ $phone->phone }}
                                 </td>
                                 <td>
                                     <input type="hidden" class="phone_id" id="{{$phone->id}}" value="{{$phone->id}}">
                                     <input type="hidden" class="phone_number" id="{{$phone->phone}}" value="{{$phone->phone}}">
                                 
-                                    <button onclick="if(confirm('Confirmez vous la suppresion de ce numero ?')) {document.getElementById('form-{{$phone->id}}').submit()}" class="btn"> 
-                                        <i  class="fa-solid fa-trash-can fa-lg" style="color:red"></i>
-                                    </button>
+                                    
                                     <button class="btn update_phone" data-bs-target="#updatePhoneModal" data-bs-toggle="modal">
-                                        <i class="fa-solid fa-pen-to-square fa-lg" style="color:green"></i>
+                                        <i class="fa-solid fa-pen-to-square" style="color:green"></i>
+                                    </button>
+                                    <button onclick="if(confirm('Confirmez vous la suppresion de ce numero ?')) {document.getElementById('form-{{$phone->id}}').submit()}" class="btn"> 
+                                        <i class="fa-solid fa-trash" style="color:red"></i>
                                     </button>
                                     <form action="{{route('confirm_delete_structure',$phone->id )}}" id="form-{{$phone->id}}" method="POST">
                                         @csrf

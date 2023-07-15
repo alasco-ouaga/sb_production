@@ -37,96 +37,37 @@ class UsersController extends Controller
             'phone'=>'required',
         ]);
 
+        $new = new FonctionController();
+        $response = $new->userCreateSave($request->first_name,$request->last_name,$request->phone,$request->email,$request->locality,$request->role_id);
 
-        $structure_id = Structure::first()->id;
-
-        //generer un matricule
-        $min=5000;
-        $max=9000;
-        $controller = new FonctionController();
-        $matricule = $controller->create_matricule($min , $max);
-
-        do {
-            $matricule = $controller->create_matricule($min , $max);
-        } while (User::where("matricule",$matricule)->exists());
-
-        //generer un mot de passe aleatoir 
-        $password = Str::random(10, 'abcdef123456');
-
-        //verification de l'email
-        if($request->email != null){
-            if( User::where("email",$request->email)->exists()){
-                return back()->with("email_find_error","L'email est deja utilisé")->withInput();
-            }
-        }
-       
-        $user = [
-            'structure_id'          => $structure_id,
-            'first_name'            =>$request->first_name,
-            'last_name'             =>$request->last_name,
-            'phone'                 =>$request->phone,
-            'email'                 =>$request->email,
-            'matricule'             =>$matricule,
-            'password'              => Hash::make($password),
-        ];
-
-        //Enregistrement du user
-        if (User::insert($user)){
-            //Enregistrement des roles du user
-            $user = User::where("matricule",$matricule)->first();
-
-            //recuper le role selectionner
-            $index = $request->role_id;
-
-            //Enregistre le role du user
-            $role = [
-                "role_id"=>$request->role_id,
-                "user_id"=>$user->id,
-                "index"=>true
-            ];
-            RoleUser::insert( $role);
-
-            $compter =count(Role::all()) ;
-            $index++;
-
-            while($index < $compter){
-                $role = [
-                    "role_id"=>$request->role_id,
-                    "user_id"=>$user->id,
-                    "index"=>false
-                ];
-                RoleUser::insert($role);
-                $index++;
-            }
-            return back()->with("create_success","L'agent a été ajouter avec succès");
+        if($response != false){
+            return back()->with("create_success","L'agent a été ajouté avec succès");
         }
         else{
-            return back()->with("create_denied","L'ajout de l'agent a echoué (server error possible) : Actualiser la page svp");
+            return back()->with("create_denied","L'ajout de l'agent a echoué (server error) : Actualiser la page svp");
         }
     }
 
     public function get_role() {
+        $user_id = auth()->user()->id;
+        $new = new FonctionController();
+        $user_connect_role_id = $new->userRoleId($user_id);
         $roles = Role::all();
-        return view("admin.user.show.index",compact("roles"));
+        return view("admin.user.show.index",compact("roles","user_connect_role_id"));
     }
 
     public function show_user($role_id){
         $role_users = RoleUser::where("role_id",$role_id)->where("index",true)->get();
         $users = [];
         foreach($role_users as $role_user){
-            $users[] = User::find($role_user->user_id);
+            $user = User::find($role_user->user_id);
+            if($user->delete == false){
+                $users[] = $user;
+            }
         }
         $role_name = Role::find($role_id)->name;
         $compter = count($users);
         return view("admin.user.show.show",compact("users","compter","role_name"));
-    }
-
-    public function delete_user() {
-        
-    }
-
-    public function authaurize_user() {
-        
     }
 
     public function get_user_data($user_id){
@@ -170,5 +111,33 @@ class UsersController extends Controller
         $new = new FonctionController();
         $response = $new->userCreateSave($request->first_name,$request->last_name,$request->phone,$request->email,$request->locality,$request->role_id);
         return $response;
+    }
+
+    public function user_delete($user_id){
+        if(User::where("id",$user_id)->update(["delete"=>true])){
+            return back()->with("delete_success","Agent supprimer avec succès");
+        }
+        else{
+            return back()->with("delete_denied","Echec : Attention suppression refusée");
+        }
+    }
+    
+
+    public function user_blocked($user_id){
+        if(User::where("id",$user_id)->update(["access"=>false])){
+            return back()->with("blocked_success","Agent suspendu avec succès");
+        }
+        else{
+            return back()->with("blocked_denied","Echec : La suspension de l'agent a echoué");
+        }
+    }
+
+    public function user_authaurize($user_id){
+        if(User::where("id",$user_id)->update(["access"=>true])){
+            return back()->with("authaurize_success","Agent authaurisé avec succès");
+        }
+        else{
+            return back()->with("authaurize_denied","Echec : Authaurisation de l'agent a echoué");
+        }
     }
 }

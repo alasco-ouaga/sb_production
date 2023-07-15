@@ -24,7 +24,7 @@
         <form  action="{{ route('save_user_create') }}" method="POST" >
         {!! csrf_field() !!}
         <div class="container"> 
-            <div class="row "> 
+            <div class="row mt-4"> 
                 <div class=" col-xl-6 col-lg-6 ">
                         <label  class="form-label text_gras mt-2">Nom<span class="red-color">*</span></label>
                         <input type="text"  name="first_name"  value="{{ old('first_name') }}"  class="form-control @error('first_name') is-invalid @enderror" placeholder="Nom">
@@ -36,7 +36,13 @@
                         <input type="text" id="last_name" name="last_name"  class="form-control @error('last_name') is-invalid @enderror"  value="{{ old('last_name') }}" placeholder="Prenom">
                         @error("last_name")
                             <div class="text_red"> Le champs prenom est demandé  </div>
-                        @enderror 
+                        @enderror
+
+                        <label  class="form-label text_gras mt-2"> Localité <span class="red-color">*</span></label>
+                        <input type="text" name="locality" class="form-control "  value="{{ old('locality') }}" placeholder="bouroum-bouroum">
+                        @error("locality")
+                            <div class="text_red"> Le champs localité est demandé  </div>
+                        @enderror
                 </div>
 
                 <div class=" col-xl-6 col-lg-6 ">
@@ -48,25 +54,24 @@
 
                     <label  class="form-label text_gras mt-2">Email <span class="red-color">*</span></label>
                     <input type="email" name="email" class="form-control "  value="{{ old('email') }}" placeholder="example@gmail.com">
+
+                    <label for="" class="text_gras mb-2 mt-2">Role</label>
+                    <select class="form-select" name="role_id" aria-label="Default select example">
+                        @foreach($roles as $role)
+                            @if($role->name == "administrateur")
+                                @if($role_name == "administrateur")
+                                    <option class="text-uppercase" value="{{$role->id}}"> {{$role->name}}</option>
+                                @endif
+                            @else
+                                <option class="text-uppercase" value="{{$role->id}}" > {{$role->name}}</option>
+                            @endif
+                        @endforeach
+                    </select>
                 </div>
             </div>
-
-            <div class="mt-2">
-                <label for="" class="text_gras mb-2">Role</label>
-                <select class="form-select" name="role_id" aria-label="Default select example">
-                    @foreach($roles as $role)
-                        @if($role->name == "administrateur")
-                            @if($role_name == "administrateur")
-                                <option class="text-uppercase" value="{{$role->id}}"> {{$role->name}}</option>
-                            @endif
-                        @else
-                            <option class="text-uppercase" value="{{$role->id}}" > {{$role->name}}</option>
-                        @endif
-                    @endforeach
-                </select>
-            </div>
+        
             <div class="container mt-4">
-                    <button class="btn btn-success float-end mt-3 mb-3 text_gras" type="submit"> Enregistré</button>
+                <button class="btn btn-success float-end mt-3 mb-3 text_gras" type="submit"> Enregistré</button>
             </div>
         </div>
         </form>

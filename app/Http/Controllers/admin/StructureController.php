@@ -114,7 +114,7 @@ class StructureController extends Controller
     }
 
     //Avoir tous les roles
-    public function get_role(){
+    public function get_role_to_list_permission(){
         $roles = Role::all();
         return view("admin.structure.role.show",compact("roles"));
     }

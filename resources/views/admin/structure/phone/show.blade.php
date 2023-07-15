@@ -33,7 +33,7 @@
        
         <div class=" mb-2 container">
             <div class="row ">
-                <table class="table table-light table-responsive-md ">
+                <table class="table table-responsive-md ">
                     <thead>
                         <tr>
                             <th scope="col">Num  </th>

@@ -46,7 +46,7 @@ Route::middleware('auth')->group(function(){
         Route::post('/gestionRouteProtected/api/phone/update', [StructureController::class, 'save_phone_update']);
 
         //Role
-        Route::get('/gestionRouteProtected/roles/show', [StructureController::class, 'get_role'])->name('get_role');
+        Route::get('/gestionRouteProtected/roles/show', [StructureController::class, 'get_role_to_list_permission'])->name('get_role_to_list_permission');
         Route::get('/gestionRouteProtected/role/permission/{role_id}', [StructureController::class, 'get_role_permission'])->name('get_role_permission');
 
         //User
@@ -61,6 +61,9 @@ Route::middleware('auth')->group(function(){
         Route::post('/gestionRouteProtected/api/user/update/save', [UsersController::class, 'user_update_save']);
         Route::get('/gestionRouteProtected/api/get/role', [UsersController::class, 'get_role_to_create_user']);
         Route::post('/gestionRouteProtected/api/user/create/save', [UsersController::class, 'user_create_save']);
+        Route::get('/gestionRouteProtected/user/blocked/{user_id}', [UsersController::class, 'user_blocked'])->name('user_blocked');
+        Route::get('/gestionRouteProtected/user/authaurize/{user_id}', [UsersController::class, 'user_authaurize'])->name('user_authaurize');
+        Route::get('/gestionRouteProtected/user/delete/{user_id}', [UsersController::class, 'user_delete'])->name('user_delete');
 
         
     });

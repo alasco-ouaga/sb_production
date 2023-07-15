@@ -16,20 +16,20 @@
                     $num =0;
                 @endphp
                 @foreach($roles as $role)
-                    @php
-                        $num++;
-                    @endphp
-                    <tr class="text-uppercase">
-                        <td> {{ $num}} </td>
-                        <td> {{ $role->name}} </td>
-                        <td>
-                            <form action="{{route('show_user' , $role->id)}}">
-                                <button class="btn btn-succes" > 
-                                    <i class="fa-solid fa-eye" ></i>
-                                </button>
-                            </form> 
-                        </td>
-                    </tr>
+                    @if($role->id >= $user_connect_role_id)
+                        @php $num++; @endphp
+                        <tr class="text-uppercase">
+                            <td> {{ $num}} </td>
+                            <td> {{ $role->name}} </td>
+                            <td>
+                                <form action="{{route('show_user' , $role->id)}}">
+                                    <button class="btn btn-succes" > 
+                                        <i class="fa-solid fa-eye" ></i>
+                                    </button>
+                                </form> 
+                            </td>
+                        </tr>
+                    @endif
                 @endforeach
             </tbody>        
         </table>

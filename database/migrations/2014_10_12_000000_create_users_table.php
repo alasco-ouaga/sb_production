@@ -20,6 +20,7 @@ return new class extends Migration
             $table->string('locality')->nullable();
             $table->string('email')->nullable();
             $table->boolean('access');
+            $table->boolean('delete');
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->rememberToken();

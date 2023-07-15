@@ -58,7 +58,7 @@
                                         <a class="nav-link menu-text gras" href="{{ route('get_structure_phone') }}"> Telephone</a> 
                                     @endcan
                                     @can('voir_entreprise_roles')
-                                        <a class="nav-link gras menu-text" href="{{ route('get_role') }}">Role</a>
+                                        <a class="nav-link gras menu-text" href="{{ route('get_role_to_list_permission') }}">Role</a>
                                     @endcan
                                 </nav>
                             </div>

@@ -141,11 +141,14 @@ $(document).ready(function () {
           var get_email = document.getElementById('get_email');
           var get_user_id = document.getElementById('get_user_id');
           var get_role_name = document.getElementById('get_role_name');
-          get_first_name.value=response.user["first_name"];
-          get_last_name.value=response.user["last_name"];
-          get_phone.value=response.user["phone"];
-          get_email.value=response.user["email"];
-          get_role_name.value=response.role;
+          var get_locality = document.getElementById('get_locality');
+          get_first_name.textContent=response.user["first_name"];
+          get_first_name.textContent=response.user["first_name"];
+          get_last_name.textContent=response.user["last_name"];
+          get_phone.textContent=response.user["phone"];
+          get_email.textContent=response.user["email"];
+          get_locality.textContent=response.user["locality"];
+          get_role_name.textContent=response.role;
         })
   
         request.fail(function (jqXHR, textStatus, errorThrown) {
@@ -296,6 +299,7 @@ $(document).ready(function () {
         $(".create_first_name_null").hide()
         $(".create_last_name_null").hide()
         $(".create_phone_null").hide()
+        $(".create_password").hide();
 
         $(".user_create_success").hide();
         $(".user_create_denied").hide();
@@ -373,9 +377,11 @@ $(document).ready(function () {
           //En cas de reusiite de modification 
           request.done(function (response, textStatus, jqXHR) {
             console.log("le retour est : "+response);
-            if(response == true){
+            if(response != false){
               $(".user_create_success").show();
               $(".user_create_denied").hide();
+              $(".create_password").show();
+              document.getElementById("create_password").textContent=response;
               document.getElementById("create_first_name").value="";
               document.getElementById("create_last_name").value="";
               document.getElementById("create_phone").value="";

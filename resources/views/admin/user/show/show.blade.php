@@ -7,33 +7,40 @@
 
     <div class="container mt-4 mb-4">
         <div class="container  text-center">
-                @if(Session()->has('error'))
-                    <div class="row alert alert-warning   italic text-uppercase gras">
-                        {{ Session()->get('error') }}
-                    </div>
-                @endif
-
-                @if(Session()->has('delete_error'))
-                    <div class="row alert alert-warning   italic text-uppercase gras">
-                        {{ Session()->get('delete_error') }}
-                    </div>
-                @endif
 
                 @if(Session()->has('blocked_success'))
-                    <div class="alert alert-danger   italic text-uppercase gras" role="alert">
+                    <div class="row text_gras text_red" role="alert">
                           {{ Session()->get('blocked_success') }}
                     </div>
                 @endif
 
-                @if(Session()->has('authorize_success'))
-                    <div class="alert alert-success   italic text-uppercase gras" role="alert">
-                          {{ Session()->get('authorize_success') }}
+                @if(Session()->has('blocked_denied'))
+                    <div class="row text_gras text_red" role="alert">
+                          {{ Session()->get('blocked_denied') }}
+                    </div>
+                @endif
+
+                @if(Session()->has('authaurize_success'))
+                    <div class="row text_gras text_blue" role="alert">
+                          {{ Session()->get('authaurize_success') }}
+                    </div>
+                @endif
+
+                @if(Session()->has('authaurize_denied'))
+                    <div class="row text_gras text_blue" role="alert">
+                          {{ Session()->get('authaurize_denied') }}
                     </div>
                 @endif
 
                 @if(Session()->has('delete_success'))
-                    <div class="row  alert alert-success  italic text-uppercase gras">
+                    <div class="row text_gras text_blue">
                         {{ Session()->get('delete_success') }}
+                    </div>
+                @endif
+
+                @if(Session()->has('delete_denied'))
+                    <div class="row text_gras text_red">
+                        {{ Session()->get('delete_denied') }}
                     </div>
                 @endif
 
@@ -56,9 +63,9 @@
                 <thead>
                     <tr>
                         <th scope="col">Num </th>
-                        <th scope="col">Secretaires</th>
+                        <th scope="col">Agents</th>
                         <th scope="col">Action </th>
-                        <th scope="col">Bloquer </th>
+                        <th scope="col">Permission</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -74,38 +81,34 @@
                                 {{ $num }}
                             </td>
                             <td>
-                                {{ $user->first_name }}-{{ $user->last_name }} <br>
+                                {{ $user->first_name }} {{ $user->last_name }} <br>
                                 {{$user->phone}} <br>
-                                @if($user->is_permits == true)
-                                    <span  style="color:green" >Accès authorisé </span>
+                                @if($user->access == true)
+                                    <span class="text_gras text_blue" >authorisé </span>
                                 @else
-                                    <span  style="color:red"> Accès refusé </span>
+                                    <span  class="text_gras text_red"> refusé </span>
                                 @endif
 
                             </td>
                             <td>
                             <div class="row">
                                     <div class="col-xl-2 col-lg-2 ">
-                                        <form action="" method="POST" >
-                                                @csrf
-                                                <input type="hidden"class="userId" id="{{$user->id}}" name="user_id" value="{{$user->id}}" >
-                                                <button type="button" class="btn get_user_info" data-bs-toggle="modal" data-bs-target="#get-user-info">
-                                                        <i class="fa-solid fa-eye" > </i>
-                                                </button>
-                                        </form>
+                                        <input type="hidden"class="userId" id="{{$user->id}}" name="user_id" value="{{$user->id}}" >
+                                        <button type="button" class="btn get_user_info" data-bs-toggle="modal" data-bs-target="#get-user-info">
+                                                <i class="fa-solid fa-eye" > </i>
+                                        </button>
                                     </div>
 
                                     <div class="col-xl-2 col-lg-2 ">
-                                            @csrf
-                                            <input type="hidden"class="userId" id="{{$user->id}}" name="user_id" value="{{$user->id}}" >
-                                            <button type="button" class="btn get_user_data_to_update" data-bs-toggle="modal" data-bs-target="#UpdateModalCenter">  
+                                        <input type="hidden"class="userId" id="{{$user->id}}" name="user_id" value="{{$user->id}}" >
+                                        <button type="button" class="btn get_user_data_to_update" data-bs-toggle="modal" data-bs-target="#UpdateModalCenter">  
                                             <i class="fa fa-user-edit"></i>
-                                            </button>
+                                        </button>
                                     </div>
 
                                     <div class="col-xl-2 col-lg-2 ">
                                         <i onclick="if(confirm('Confirmez vous la suppression de cet ?')) {document.getElementById('form-{{$user->id}}').submit()}" class="btn"> <i class="fa-solid fa-trash" style="color:red"></i></i>
-                                        <form action="{{route('delete_user',$user->id)}}" id="form-{{$user->id}}" method="POST" >
+                                        <form action="{{route('user_delete',$user->id)}}" id="form-{{$user->id}}" method="get" >
                                             @csrf
                                         </form>
                                     </div>
@@ -114,25 +117,20 @@
                             </td>
 
                             <td>
-                                @if($user->is_permits == true)
+                                @if($user->access == true)
                                     <button class="btn gras" onclick="if(confirm('Confirmer vous la suspension de  cet utilisateur ?'))
                                             {document.getElementById('form-block-{{$user->id}}').submit()}">
-                                            <i class="fa fa-user-lock"> </i>  <span class="px-3"  style="color:red">bloquer</span> 
+                                            <i class="fa fa-user-lock"> </i>  <span class="px-3 text_red text_gras"> bloquer</span> 
                                     </button>
                                     
-                                    <form id="form-block-{{$user->id}}" action="{{route('blocked_users')}}" method="POST" >
-                                        @csrf
-                                        <input type="hidden"  name="user_id" value="{{$user->id}}" >
-                                    </form>
+                                    <form id="form-block-{{$user->id}}" action="{{route('user_blocked' , $user->id)}}" method="get" >@csrf</form>
                                 @else
                                     <button class="btn gras" onclick="if(confirm('Confirmer la suppression de cet Secretaire?'))
                                             {document.getElementById('form-block-{{$user->id}}').submit()}"> 
                                             <i class="fas fa-user-check"></i> 
-                                            <span class="px-3"  style="color:green">autoriser</span>  
+                                            <span class="px-3 text_blue text_gras">autoriser</span>  
                                     </button>
-                                    <form id="form-block-{{$user->id}}" action="{{route('authaurize_user',$user->id )}}" method="post" >
-                                        @csrf
-                                    </form>
+                                    <form id="form-block-{{$user->id}}" action="{{route('user_authaurize',$user->id )}}" method="get" >@csrf</form>
                                 @endif
                             </td>
                             </tr>
@@ -145,19 +143,18 @@
   </div>
 @else
 <div class="container text-center">
-    <div class="row  italic mt-4 alert border text-uppercase">
-        <span class="red italic gras"> Not data found.please refresh or create et new user </span>
-        <span class="red"> User is not avoilable for you </span>
+    <div class="row mt-4">
+        <span class="text_red text_gras mt-4 size_x_large"> Données introuvables : actualiser la page</span>
     </div>
 </div>
 @endif
 
 <!-- Modal pour voir les informations du user -->
 <div class="modal fade black" id="get-user-info" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="get-user-info-label" aria-hidden="true">
-  <div class="modal-dialog  modal-dialog-centered">
+  <div class="modal-dialog  modal-dialog-centered modal-lg">
     <div class="modal-content">
       <div class="modal-header">
-        <h1 class="modal-title fs-5" id="staticBackdropLabel">DETAIL</h1>
+        <h1 class="modal-title fs-5 text_gras">DETAIL</h1>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
@@ -165,32 +162,38 @@
             <div class="row mt-3">
                 <div class="col-xl-6 col-lg-6">
                     <label for="" class="text_gras"> NOM </label>
-                    <input  type="text" readonly class="form-control" id="get_first_name">  </input>
+                    <span class="form-control" id="get_first_name" >  </span>
                 </div>
                 <div class="col-xl-6 col-lg-6">
                     <label for="" class="text_gras"> PRENOM </label>
-                    <input type="text" readonly class="form-control" id="get_last_name">  </input>
+                    <span class="form-control" id="get_last_name">  </span>
                 </div>
             </div>
-            <hr>
             <div class="row mt-2" >
                 <div class="">
                     <label for="" class="text_gras"> PHONE  </label>
-                    <input type="text" readonly class="form-control"  id="get_phone"> </input>
+                    <span  class="form-control"  id="get_phone"> </span>
                 </div>
             </div>
 
             <div class="row mt-2" >
                 <div class="">
                     <label for="" class="text_gras">  EMAIL </label>
-                    <input type="text"  readonly class="form-control" id="get_email">  </input>
+                    <span  class="form-control" id="get_email">  </span>
+                </div>
+            </div>
+
+            <div class="row mt-2" >
+                <div class="">
+                    <label for="" class="text_gras">  LOCALITE </label>
+                    <span class="form-control" id="get_locality">  </span>
                 </div>
             </div>
 
             <div class="row mt-2" >
                 <div class="">
                     <label for="" class="text_gras">  ROLE </label>
-                    <input type="text"  readonly class="form-control text-uppercase" id="get_role_name">  </input>
+                    <span class="form-control text-uppercase" id="get_role_name">  </span>
                 </div>
             </div>
         </div>
@@ -205,16 +208,21 @@
 
 <!-- Modal pour creer un nouveau user -->
 <div class="modal fade black" id="createUserModal" tabindex="-1" aria-labelledby="createUserModal" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered">
+  <div class="modal-dialog modal-dialog-centered modal-lg">
     <div class="modal-content">
       <div class="modal-header">
-        <h1 class="modal-title fs-5 gras" id="exampleModalLabel">NOUVEL UTILISATEUR</h1>
+        <h1 class="modal-title fs-5 gras text_gras">NOUVEL AGENT</h1>
         <button type="button" class="btn-close  btn-stop" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
             <div class="container mt-1 time-new-rooman">
                 <div class="row">
-                    <span class="text_blue text_gras hide user_create_success hide">L'agent a été ajouté avec succès </span>
+                    <span class="text_blue text_gras hide user_create_success hide">L'agent a été ajouté avec succès (password ci-dessous) </span>
+                </div>
+                <div class="row mt-2">
+                    <div class="container  create_password hide">
+                        <span class="form-control text-center text_gras text_red " id="create_password" ></span> 
+                    </div>
                 </div>
                 <div class="row">
                     <span class="text_red text_gras hide user_create_denied hide">Echec : Attention, cet email est deja utilisé </span>
@@ -278,7 +286,7 @@
 
 <!-- Modal pour modification -->
 <div class="modal fade black" id="UpdateModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered" role="document">
+  <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title gras" id="exampleModalLongTitle">MODIFICATION</h5>
@@ -324,7 +332,7 @@
                 <div class="modal-body-select" >
                     <label for="" class="gras">  Role </label>
                     <select name="" class="form-control" id="role_id">
-
+                        <!-- contenu -->
                     </select>
                 </div>
             </div>

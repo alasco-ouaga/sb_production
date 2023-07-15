@@ -156,6 +156,7 @@ class FonctionController extends Controller
                 "locality"              => $locality,
                 'password'              => Hash::make($password),
                 "access"                => true,
+                "delete"                => false,
             ];
 
             $insert =  User::insert($user);
@@ -175,6 +176,22 @@ class FonctionController extends Controller
                 $response = false;
             }
         }
-        return $response;
+
+        if($response = true ){
+            return $password;
+        }
+        else{
+            return $response;
+        }
+    }
+
+    //suprimer un agent
+    public function deleteUser($user_id){
+        if(User::where("id",$user_id)->update(["delete"=>true])){
+            return true;
+        }
+        else{
+            return false;
+        }
     }
 }

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\admin;
 use App\Http\Controllers\Controller;
+use App\Models\Custumer;
 use App\Models\Role;
 use App\Models\RoleUser;
 use App\Models\Structure;
@@ -188,6 +189,61 @@ class FonctionController extends Controller
     //suprimer un agent
     public function deleteUser($user_id){
         if(User::where("id",$user_id)->update(["delete"=>true])){
+            return true;
+        }
+        else{
+            return false;
+        }
+    }
+
+    /* .............les fonctions pour la partie concernants  les clients.................. */
+    /* .............les fonctions pour la partie concernants  les clients.................. */
+
+    //fonction pour enregistrer un client
+    public function custumerCreateSave($first_name,$last_name,$phone,$locality)
+    {
+        $structure_id = Structure::first()->id;
+
+        //generer un matricule
+        $min= 5000 ;
+        $max= 9000 + count(Custumer::all()) ;
+
+        do {
+            $matricule = $this->create_matricule($min , $max);
+        }while (Custumer::where("matricule",$matricule)->exists());
+
+        //verification de l'email
+        if(Custumer::where("phone",$phone)->exists()){
+            $response = false;
+        }
+        else{
+            $custumer = [
+                'structure_id'          => $structure_id,
+                'first_name'            => $first_name,
+                'last_name'             => $last_name,
+                'phone'                 => $phone,
+                'matricule'             => $matricule,
+                'locality'              => $locality,
+                'access'                => true,
+                'delete'                => false,
+            ];
+            if(Custumer::insert($custumer)){
+                $response = true;
+            }
+        }
+        return $response;
+    }
+
+    //fonction pour modifier un client
+    public function custumerUpdateSave($custumer_id,$first_name,$last_name,$phone,$locality)
+    {
+        $response = Custumer::where("id",$custumer_id)->update([
+            'first_name'            => $first_name,
+            'last_name'             => $last_name,
+            'phone'                 => $phone,
+            'locality'              => $locality,
+        ]);
+        if($response){
             return true;
         }
         else{

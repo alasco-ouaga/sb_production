@@ -22,6 +22,7 @@ class DatabaseSeeder extends Seeder
             PermissionRoleSeeder::class,
             RoleUserSeeder::class,
             PhoneSeeder::class,
+            ProduitSeeder::class,
         ]);
     }
 }

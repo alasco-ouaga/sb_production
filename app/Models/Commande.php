@@ -15,7 +15,7 @@ class Commande extends Model
 
     protected $fillable = [
         "quantity",
-        "amount",
+        "surplus",
         "note",
         "custumer_id",
         "produit_id",
@@ -31,8 +31,13 @@ class Commande extends Model
         return $this->hasMany(Payment::class, "payment_id");
     }
 
-    public function saison() : BelongsTo 
+    public function produit(): BelongsTo
+    {
+        return $this->belongsTo(Produit::class, "produit_id");
+    }
+
+   /*  public function saison() : BelongsTo 
     {
         return $this->belongsTo(Saison::class , "saison_id");
-    }
+    } */
 }

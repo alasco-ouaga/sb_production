@@ -196,8 +196,8 @@ class FonctionController extends Controller
         }
     }
 
-    /* -------------------les fonctions pour la partie concernants  les clients----------------- */
-    /* -------------------les fonctions pour la partie concernants  les clients----------------- */
+    /* ----------------les fonctions pour la partie concernants  les clients----------------- */
+    /* ----------------les fonctions pour la partie concernants  les clients----------------- */
 
     //fonction pour enregistrer un client
     public function custumerCreateSave($first_name,$last_name,$phone,$locality)
@@ -257,6 +257,14 @@ class FonctionController extends Controller
             }
         }
         return $response;
-       
     }
+
+    /* -----------------les fonctions pour la partie concernants  les commande----------------- */
+    /* -----------------les fonctions pour la partie concernants  les commande----------------- */
+
+    //Enegistrer une nouvelle commande 
+    public function commandeCreateSave($custumer_id,$produit_id,$quantity,$susplus,$note,$code) {
+        
+    }
+
 }

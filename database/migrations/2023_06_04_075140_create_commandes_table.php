@@ -10,10 +10,13 @@ return new class extends Migration
     {
         Schema::create('commandes', function (Blueprint $table) {
             $table->id();
-            $table->integer("quantite");
-            $table->integer("surplus");
-            $table->string("note");
-            $table->string("code");
+            $table->integer("quantity");
+            $table->integer("excess")->nullable();
+            $table->string("note")->nullable();
+            $table->string("delete");
+            $table->string("code")->unique();
+            $table->boolean("pay");
+            $table->boolean("completed");
             $table->timestamps();
         });
     }

@@ -17,6 +17,7 @@ class Commande extends Model
         "quantity",
         "surplus",
         "note",
+        "delete",
         "custumer_id",
         "produit_id",
     ];

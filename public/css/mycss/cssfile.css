@@ -2,7 +2,7 @@
   /* background-color: rgba(37, 104, 116, 0.938); */
   background-color: black;
   color: white;
-  padding: 17px;
+  padding: 18px;
   text-transform: uppercase;
   font-style: italic;
   font-weight: bold;
@@ -39,6 +39,34 @@
 
 .text_gras{
   font-weight: bold;
+}
+
+.invoice_back{
+  background-color:rgb(47, 104, 47) ;
+  padding: 13px;
+  color: white;
+}
+
+.invoice_police {
+  text-decoration: dashed;
+  text-transform: capitalize;
+  text-shadow: 0cqmax;
+  font-style: oblique;
+}
+
+.invoice_margin {
+  margin-top: 60px;
+}
+
+.invoice_pading {
+  padding: 10px;
+  background-color: rgb(231, 224, 224);
+}
+
+
+
+.text_black{
+  color :black
 }
 
 .size_x_large{

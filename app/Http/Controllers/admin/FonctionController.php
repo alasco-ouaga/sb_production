@@ -6,7 +6,9 @@ use App\Models\Custumer;
 use App\Models\Role;
 use App\Models\RoleUser;
 use App\Models\Structure;
+use App\Models\Commande;
 use App\Models\User;
+use Illuminate\Console\Command;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Hash;
@@ -20,11 +22,16 @@ class FonctionController extends Controller
         return $code;
     }
 
+    public function commandeCreateMatricule($min , $max) {
+        $matricule = mt_rand($min,$max);
+        return $matricule;
+    }
+
     //fonction pour obtenir le role d'un user
     public function userRoleName($user_id){
         $role_user = RoleUser::where("user_id",$user_id)->where("index",true)->first();
         $role = Role::find($role_user->role_id);
-        $role =$role->name;
+        $role = $role->name;
         return $role;
     }
 
@@ -263,8 +270,94 @@ class FonctionController extends Controller
     /* -----------------les fonctions pour la partie concernants  les commande----------------- */
 
     //Enegistrer une nouvelle commande 
-    public function commandeCreateSave($custumer_id,$produit_id,$quantity,$susplus,$note,$code) {
+    public function commandeCreateSave($custumer_id,$produit_id,$quantity,$susplus,$note) {
         
+        $min = 1000000 ;
+        $max = $min + count(Commande::all());
+       
+        do {
+            $code = $this->commandeCreateMatricule($min,$max);
+        }while (Commande::where("code",$code)->exists());
+
+        $commande = [
+            "custumer_id"           =>$custumer_id,
+            "produit_id"            =>$produit_id,
+            "quantity"              =>$quantity,
+            "note"                  =>$note,
+            "excess"                =>$susplus,
+            "code"                  =>$code,
+            "delete"                =>false,
+            "pay"                   =>false,
+            "completed"             =>false,
+            "created_at"            =>now(),
+            "updated_at"            =>now()
+        ];
+
+        if(Commande::insert($commande)){
+            return true;
+        }
+        else{
+            return false;
+        }
+    }
+
+    //Modification d'une  commande 
+    public function commandeUpdateSave($commande_id,$custumer_id,$quantity,$surplus,$note) {
+        
+        $update = Commande::where("id",$commande_id)->update([
+                    "custumer_id"   =>$custumer_id,
+                    "quantity"      =>$quantity,
+                    "note"          =>$note,
+                    "excess"        =>$surplus,
+                    "updated_at"    =>now()
+                ]);
+
+        if($update){
+            return true;
+        }
+        else{
+            return false;
+        }
+    }
+
+    //suprimer une commande 
+    public function commandeDelete($commande_id)
+    {
+        $role_id = $this->userRoleId(auth()->user()->id);
+        if($role_id == 3){
+            return false ;
+        }
+        else{
+            Commande::where("id",$commande_id)->update([
+                "delete"    => true
+            ]);
+            return true;
+        }
+    }
+
+    //Recuper les commandes payés
+    public function commandePayementCompleted()
+    {
+        $commande = Commande::where("pay",false)
+                    ->where("completed",false)
+                    ->orderBy('id','desc')
+                    ->paginate(10);
+
+        if($commande){
+            return $commande;
+        }
+    }
+
+    //Recuper les commandes impayés
+    public function commandePayementUncompleted(){
+
+        $commande = Commande::where("pay",true)
+                    ->orderBy('id','desc')
+                    ->paginate(10);
+
+        if($commande){
+            return $commande;
+        }
     }
 
 }

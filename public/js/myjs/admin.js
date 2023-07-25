@@ -615,5 +615,53 @@ $(document).ready(function () {
     }
   })
 
+
+   // Ajouter un nouveau numero telephone
+   $('.create_new_phone').click(function () {
+      // Récupérez le select et ses options
+      const selectAgents = document.getElementById('custumer_id');
+      const options = selectAgents.getElementsByTagName('option');
+
+      // Ajoutez un écouteur d'événements pour capturer la saisie de l'utilisateur
+      selectAgents.addEventListener('keyup', function () {
+          const searchText = selectAgents.value.toLowerCase();
+
+          // Parcourez toutes les options et affichez celles qui correspondent à la saisie de l'utilisateur
+          for (const option of options) {
+              const optionText = option.textContent.toLowerCase();
+              const display = optionText.includes(searchText) ? 'block' : 'none';
+              option.style.display = display;
+          }
+      });
+  })
+
+     // Ajouter un nouveau numero telephone
+     $('.dynamic_search').click(function () {
+      // Récupérez le select et ses options
+      const selectAgents = document.getElementById('custumer_id');
+      const options = selectAgents.getElementsByTagName('option');
+
+      // Ajoutez un écouteur d'événements pour capturer la saisie de l'utilisateur
+      selectAgents.addEventListener('keyup', function () {
+          const searchText = selectAgents.value.toLowerCase();
+
+          // Parcourez toutes les options et affichez celles qui correspondent à la saisie de l'utilisateur
+          for (const option of options) {
+              const optionText = option.textContent.toLowerCase();
+              const display = optionText.includes(searchText) ? 'block' : 'none';
+              option.style.display = display;
+          }
+      });
+  })
+
+  //Commande gestion 
+    //Obtenir les informations du client
+    $('.get_commande_info').click(function () {
+      const commande_id = $(this).parent().find('.commande_id').attr('id');
+      var monTableau = JSON.parse(document.getElementById('tableau').dataset.tableau);
+      console.log("id"+commande_id)
+      console.log("tableau"+monTableau)
+
+    })
   
 });

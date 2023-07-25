@@ -116,11 +116,11 @@
                             <div class="collapse" id="collapseCommande" aria-labelledby="headingOne"
                                 data-bs-parent="#sidenavAccordion">
                                 <nav class="sb-sidenav-menu-nested nav menu">
-                                    @can('voir_des_commandes')
-                                        <a class="nav-link menu-text gras" href="">Voir</a>
+                                    @can('creer_des_commandes')
+                                        <a class="nav-link menu-text gras" href="{{ route('commande_create_form') }}">Créer</a>
                                     @endcan
                                     @can('creer_des_commandes')
-                                        <a class="nav-link menu-text gras" href="">Créer</a>
+                                        <a class="nav-link menu-text gras" href="{{ route('commande_unpaid') }}">Voir</a>
                                     @endcan
                                 </nav>
                             </div>
@@ -138,10 +138,16 @@
                                 data-bs-parent="#sidenavAccordion">
                                 <nav class="sb-sidenav-menu-nested nav menu">
                                     @can('voir_des_paiements')
-                                        <a class="nav-link menu-text gras" href="">Voir</a>
+                                        <a class="nav-link menu-text gras" href="">Voir</a> 
                                     @endcan
                                     @can('creer_des_paiements')
                                         <a class="nav-link menu-text gras" href="">Créer</a>
+                                    @endcan
+                                    @can('voir_des_commandes')
+                                        <a class="nav-link menu-text gras" href="{{ route('commande_unpaid') }}">Impayer</a>
+                                    @endcan
+                                    @can('voir_des_commandes')
+                                        <a class="nav-link menu-text gras" href="{{ route('commande_unpaid') }}">Payer</a>
                                     @endcan
                                 </nav>
                             </div>

@@ -26,7 +26,7 @@ class Structure extends Model
 
     public function telephones(): HasMany 
     {
-        return $this->hasMany(Telephone::class,"telephone_id");
+        return $this->hasMany(Telephone::class);
     }
 
     public function custumers(): HasMany 

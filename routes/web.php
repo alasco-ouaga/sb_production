@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\admin\StructureController;
 use App\Http\Controllers\admin\UsersController;
 use App\Http\Controllers\admin\CustumerController;
+use App\Http\Controllers\admin\CommandeController;
 use App\Models\Custumer;
 
 /*
@@ -86,5 +87,26 @@ Route::middleware('auth')->group(function(){
         Route::post('/secretaireRouteProtected/api/custumer/create', [CustumerController::class, 'ajax_custumer_create_save']);
         Route::get('/secretaireRouteProtected/api/custumer/show/{custumer_id}', [CustumerController::class, 'ajax_custumer_show']);
         Route::post('/secretaireRouteProtected/api/custumer/update', [CustumerController::class, 'ajax_custumer_update_save']);
+
+        //commande_simple
+        Route::get('/secretaireRouteProtected/commande/form', [CommandeController::class, 'commande_create_form'])->name("commande_create_form");
+        Route::post('/secretaireRouteProtected/commande/create', [CommandeController::class, 'commande_create_save'])->name("commande_create_save");
+        Route::post('/secretaireRouteProtected/commande/delete/{commande_id}', [CommandeController::class, 'commande_delete'])->name("commande_delete");
+        Route::post('/secretaireRouteProtected/commande/payment/completed', [CommandeController::class, 'commande_payment_completed'])->name("commande_payment_completed");
+        Route::get('/secretaireRouteProtected/commande/payment/uncompleted', [CommandeController::class, 'commande_unpaid'])->name("commande_unpaid");
+
+        Route::get('/secretaireRouteProtected/commande/show/{commande_id}', [CommandeController::class, 'commande_show'])->name("commande_show");
+        Route::get('/secretaireRouteProtected/commande/update/{commande_id}', [CommandeController::class, 'commande_update'])->name("commande_update");
+        Route::post('/secretaireRouteProtected/commande/update/save', [CommandeController::class, 'commande_update_save'])->name("commande_update_save");
+        Route::get('/secretaireRouteProtected/commande/delete/{commande_id}', [CommandeController::class, 'commande_delete'])->name("commande_delete");
+
+
+        //commande_api
+        Route::post('/secretaireRouteProtected/api/commande/view/{commande_id}', [CommandeController::class, 'ajax_commande_view']);
+        Route::post('/secretaireRouteProtected/api/commande/create', [CommandeController::class, 'ajax_commande_create']);
+        Route::post('/secretaireRouteProtected/api/commande/update/{commande_id}', [CommandeController::class, 'ajax_commande_update_form']);
+        Route::post('/secretaireRouteProtected/api/commande/update/save', [CommandeController::class, 'ajax_commande_update_save']);
+
+
     });
 });

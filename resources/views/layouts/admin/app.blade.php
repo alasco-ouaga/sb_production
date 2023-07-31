@@ -7,13 +7,15 @@
         <!-- CSRF Token -->
         <meta name="csrf-token" content="{{ csrf_token() }}">
 
-        <title>{{ config('app.name', 'Laravel') }}</title>
+        <title>eau dounia</title>
 
         <!-- Scripts -->
+        @livewireStyles
         @include('layouts.template.locale.mycss')
     </head>
     <body>
         @include('layouts.menu.menu')
         @include('layouts.template.locale.myjs')
+        @livewireScripts
     </body>
 </html>

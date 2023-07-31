@@ -54,8 +54,19 @@
   font-style: oblique;
 }
 
+.structure_police{
+  text-decoration: dashed;
+  text-transform: capitalize;
+  font-style: oblique;
+  font-family: cursive ;
+}
+
 .invoice_margin {
   margin-top: 60px;
+}
+
+.tale_responsive{
+  overflow-x:auto;
 }
 
 .invoice_pading {
@@ -63,6 +74,10 @@
   background-color: rgb(231, 224, 224);
 }
 
+.filtre_color{
+  background-color: indigo;
+  color: white;
+}
 
 
 .text_black{

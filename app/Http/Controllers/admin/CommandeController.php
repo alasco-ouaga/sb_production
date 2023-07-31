@@ -44,16 +44,22 @@ class CommandeController extends Controller
         return view("admin.commande.payment.show.payed",compact("commandes",$compteur));
     }
 
-    public function commande_unpaid() {
+    public function commande_unpaid(){
         $new = new FonctionController();
-        $commandes = $new->commandePayementUncompleted();
+        $commandes = $new->commandeUnpaid();
         $compter = count($commandes);
-        return view("admin.commande.show.unpaid",compact("commandes","compter"));
+        $count = $compter;
+        return view("admin.commande.show.unpaid",compact("commandes","compter","count"));
     }
 
     public function commande_delete($commande_id){
-        $commande = Commande::find($commande_id);
-        return view("admin.commande.show.invoice",compact("commande"));
+        $delete = Commande::find($commande_id)->update(["delete"=>true]);
+        if($delete){
+            return back()->with("delete_success","La commande a été supprimée avec succès");
+        }
+        else{
+            return back()->with("delete_denied","Suppression refusée : Actualisé la page");
+        }
     }
 
     public function commande_show($commande_id){

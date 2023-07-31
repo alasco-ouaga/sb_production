@@ -4,7 +4,7 @@
 <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 @section('content')
     <div class="container card ">
-        <div class="row gesiton_titre mb-2 text-uppercase text_italic py-2"> Enregistrer une commande</div>
+        <div class="row gesiton_titre mb-2 text-uppercase text_italic py-2">Modification d'une commande</div>
 
         @if (session()->has('update_success'))
             <div class="container text_gras text_blue mt-2 mb-2">

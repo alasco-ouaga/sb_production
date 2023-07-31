@@ -349,11 +349,11 @@ class FonctionController extends Controller
     }
 
     //Recuper les commandes impayés
-    public function commandePayementUncompleted(){
+    public function commandeUnpaid(){
 
-        $commande = Commande::where("pay",true)
-                    ->orderBy('id','desc')
-                    ->paginate(10);
+        $commande = Commande::where("delete",false)
+                ->orderBy('id','desc')
+                ->get();
 
         if($commande){
             return $commande;

@@ -25,14 +25,14 @@
                 <div class="container col-xl-8 col-lg-8 mt-3">
                     <label  class="form-label text_gras mt-2">Client</label>
                     <select class="form-select dynamic_search" name="custumer_id" id="sport">
-                        <option class="text_gras" selected hidden value="">----Selectionner un client----</option>
+                        <option class="text_gras" selected hidden>Aucun</option>
                         @foreach($custumers as $custumer)
                             <option  value="{{$custumer->id}}"> <span class="text_gras text-uppercase"> {{$custumer->first_name}} </span>  {{$custumer->last_name}} {{$custumer->phone}}</option>
                         @endforeach
                     </select>
 
                     <label hidden class="form-label text_gras mt-2"> Produit </label>
-                    <select hidden class="form-control" name="produit_id" id="produit_id">
+                    <select hidden class="form-select" name="produit_id" id="produit_id">
                         @foreach($produits as $produit)
                             <option value="{{$produit->id}}"> {{$produit->name}}</option>
                         @endforeach

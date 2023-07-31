@@ -42,7 +42,7 @@ class CommandeSeeder extends Seeder
                 "updated_at"            =>now()
             ],
             [
-                "custumer_id"           =>1,
+                "custumer_id"           =>2,
                 "produit_id"            =>1,
                 "quantity"              =>50,
                 "note"                  =>"Neant",
@@ -55,7 +55,7 @@ class CommandeSeeder extends Seeder
                 "updated_at"            =>now()
             ],
             [
-                "custumer_id"           =>1,
+                "custumer_id"           =>2,
                 "produit_id"            =>1,
                 "quantity"              =>60,
                 "note"                  =>"Neant",
@@ -68,7 +68,7 @@ class CommandeSeeder extends Seeder
                 "updated_at"            =>now()
             ],
             [
-                "custumer_id"           =>1,
+                "custumer_id"           =>3,
                 "produit_id"            =>1,
                 "quantity"              =>60,
                 "note"                  =>"Neant",
@@ -81,7 +81,7 @@ class CommandeSeeder extends Seeder
                 "updated_at"            =>now()
             ],
             [
-                "custumer_id"           =>1,
+                "custumer_id"           =>3,
                 "produit_id"            =>1,
                 "quantity"              =>10,
                 "note"                  =>"Neant",
@@ -94,7 +94,7 @@ class CommandeSeeder extends Seeder
                 "updated_at"            =>now()
             ],
             [
-                "custumer_id"           =>1,
+                "custumer_id"           =>4,
                 "produit_id"            =>1,
                 "quantity"              =>30,
                 "note"                  =>"Neant",
@@ -107,7 +107,7 @@ class CommandeSeeder extends Seeder
                 "updated_at"            =>now()
             ],
             [
-                "custumer_id"           =>1,
+                "custumer_id"           =>4,
                 "produit_id"            =>1,
                 "quantity"              =>20,
                 "note"                  =>"Neant",
@@ -133,7 +133,7 @@ class CommandeSeeder extends Seeder
                 "updated_at"            =>now()
             ],
             [
-                "custumer_id"           =>1,
+                "custumer_id"           =>2,
                 "produit_id"            =>1,
                 "quantity"              =>80,
                 "note"                  =>"Neant",
@@ -146,7 +146,7 @@ class CommandeSeeder extends Seeder
                 "updated_at"            =>now()
             ],
             [
-                "custumer_id"           =>1,
+                "custumer_id"           =>3,
                 "produit_id"            =>1,
                 "quantity"              =>70,
                 "note"                  =>"Neant",
@@ -159,7 +159,7 @@ class CommandeSeeder extends Seeder
                 "updated_at"            =>now()
             ],
             [
-                "custumer_id"           =>1,
+                "custumer_id"           =>4,
                 "produit_id"            =>1,
                 "quantity"              =>100,
                 "note"                  =>"Neant",
@@ -185,7 +185,7 @@ class CommandeSeeder extends Seeder
                 "updated_at"            =>now()
             ],
             [
-                "custumer_id"           =>1,
+                "custumer_id"           =>2,
                 "produit_id"            =>1,
                 "quantity"              =>90,
                 "note"                  =>"Neant",
@@ -198,7 +198,7 @@ class CommandeSeeder extends Seeder
                 "updated_at"            =>now()
             ],
             [
-                "custumer_id"           =>1,
+                "custumer_id"           =>3,
                 "produit_id"            =>1,
                 "quantity"              =>200,
                 "note"                  =>"Neant",
@@ -211,7 +211,7 @@ class CommandeSeeder extends Seeder
                 "updated_at"            =>now()
             ],
             [
-                "custumer_id"           =>1,
+                "custumer_id"           =>4,
                 "produit_id"            =>1,
                 "quantity"              =>70,
                 "note"                  =>"Neant",

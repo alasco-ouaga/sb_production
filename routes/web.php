@@ -100,6 +100,7 @@ Route::middleware('auth')->group(function(){
         Route::post('/secretaireRouteProtected/commande/update/save', [CommandeController::class, 'commande_update_save'])->name("commande_update_save");
         Route::get('/secretaireRouteProtected/commande/delete/{commande_id}', [CommandeController::class, 'commande_delete'])->name("commande_delete");
 
+        
 
         //commande_api
         Route::post('/secretaireRouteProtected/api/commande/view/{commande_id}', [CommandeController::class, 'ajax_commande_view']);
@@ -107,6 +108,7 @@ Route::middleware('auth')->group(function(){
         Route::post('/secretaireRouteProtected/api/commande/update/{commande_id}', [CommandeController::class, 'ajax_commande_update_form']);
         Route::post('/secretaireRouteProtected/api/commande/update/save', [CommandeController::class, 'ajax_commande_update_save']);
 
+        Route::view('commandes', 'livewire.filtre-commande');
 
     });
 });
